@@ -48,7 +48,7 @@ class Student:
 
     def grade(self, gradingKey):
         self.gradeFile.write(self.name + "\n")
-        self.gradeFile.write("AUTO GRADER SCORE : " + str(self.score) + "/" + str(1) + "\n")
+        self.gradeFile.write("AUTO GRADER SCORE : " + str(self.score) + "/" + str(NUMBER_OF_TEST_CASES) + "\n")
         self.gradeFile.write("-----------------------------\n")
 
         for testInput in gradingKey.keys():
@@ -73,7 +73,28 @@ class Student:
 
 def getInputs():
     # get the list of strings, each string being a set of inputs to test
-    return ["0\n0\n1\n1\n2\n2\n3\n0"]
+    global NUMBER_OF_TEST_CASES
+    inputList = []
+    with open(INPUT_FILE_PATH) as inputFile:
+        while True:
+            # loop until we run out of lines to read
+            # the first line of each set of inputs should be in the form "inputs:#"
+            numInputsLine = inputFile.readline()
+            if not numInputsLine:
+                break # we have run out of inputs 
+
+            # we have another test case, so we will loop through the number of inputs
+            #   and build the input string
+            NUMBER_OF_TEST_CASES += 1
+            numInputs = int(numInputsLine.replace("inputs:",""))
+            testInput = ""
+            for i in range(numInputs):
+                testInput += inputFile.readline()
+
+            # add each new testInput to the list of inputs
+            inputList.append(testInput)
+        
+    return inputList
 
 def getGradingKey(inputList):
     # get the dictionary mapping inputs to the correct ouptut
