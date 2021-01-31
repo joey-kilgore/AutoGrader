@@ -1,3 +1,4 @@
+from defs import *
 import subprocess
 import time
 import os
@@ -30,7 +31,7 @@ class Student:
         # test the given input using communicate
         try:
             # communicate lets us give a byte sequence (the encoded input)  and get a byte sequence out
-            (out, err) = p.communicate(input.encode('ascii'), timeout=5)
+            (out, err) = p.communicate(input.encode('ascii'), timeout=MAX_RUNTIME)
             p.kill()
         except TimeoutError:
             # if a timeout occurs we catch it here
@@ -79,7 +80,7 @@ def getGradingKey(inputList):
     # This is done by running a known correct program through all inputs
     solution = Student()
     solution.name = "solution"
-    solution.pathToBinFolder =  'L:\\School\\Spring 2021\\Intro to Object Oriented\\AutoGrader\\Connect Four Autograder\\students\JohnDoe\\bin'
+    solution.pathToBinFolder =  SOLUTION_BIN_FOLDER
 
     for testInput in inputList:
         solution.testStudent(testInput)
@@ -94,14 +95,14 @@ def listdirs(path):
 def getAllStudents():
     # return the list of all students as student objects
     #   and populate the student objects with the relevant initial information
-    studentFolders = listdirs("L:\\School\\Spring 2021\\Intro to Object Oriented\\AutoGrader\\Connect Four Autograder\\students")
+    studentFolders = listdirs(STUDENT_FOLDER_PARENT)
 
     students = []
     for studentFolder in studentFolders:
         student = Student() # create a new student
         student.name = studentFolder    # we are just going to assume that the folders are named after the students
         student.pathToGradeFile = "./" + student.name + ".txt"
-        student.pathToBinFolder = "L:\\School\\Spring 2021\\Intro to Object Oriented\\AutoGrader\\Connect Four Autograder\\students\\"+studentFolder+"\\bin"
+        student.pathToBinFolder = os.path.join(STUDENT_FOLDER_PARENT, studentFolder, PATH_TO_BIN)
         students.append(student) 
 
     return students
