@@ -10,10 +10,13 @@ SOLUTION_BIN_FOLDER = 'L:\\School\\Spring 2021\\Intro to Object Oriented\\AutoGr
 INPUT_FILE_PATH = "L:\\School\\Spring 2021\\Intro to Object Oriented\\AutoGrader\\Connect Four Autograder\\inputs.txt"
 
 # STUDENT_FOLDER_PARENT is the parent folder of all student projects
-STUDENT_FOLDER_PARENT = "L:\\School\\Spring 2021\\Intro to Object Oriented\\AutoGrader\\Connect Four Autograder\\students"
+STUDENT_FOLDER_PARENT = "L:\\School\\Spring 2021\\Intro to Object Oriented\\Project 1\\First_Set\\2_43PM"
 
 # PATH_TO_BIN is the path within the project to the bin folder
-PATH_TO_BIN = "bin"
+PATH_TO_BIN = "ConnectFour\\bin"
+
+# PATH_TO_OUTPUT is the path for the folder to put all output files
+PATH_TO_OUTPUT = "L:\\Github Repos\\AutoGrader\\output"
 
 # NUMBER_OF_TEST_CASES is AUTOMATICALLY calculated. it should be 0 here
 NUMBER_OF_TEST_CASES = 0

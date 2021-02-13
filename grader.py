@@ -55,7 +55,7 @@ def getAllStudents():
     for studentFolder in studentFolders:
         student = Student() # create a new student
         student.name = studentFolder    # we are just going to assume that the folders are named after the students
-        student.pathToGradeFile = "./" + student.name + ".txt"
+        student.pathToGradeFile = os.path.join(PATH_TO_OUTPUT, student.name + ".txt")
         student.pathToBinFolder = os.path.join(STUDENT_FOLDER_PARENT, studentFolder, PATH_TO_BIN)
         students.append(student) 
 
