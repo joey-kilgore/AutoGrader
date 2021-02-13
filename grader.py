@@ -3,6 +3,16 @@ import subprocess
 import time
 import os
 from student import *
+import time
+import math
+from multiprocessing import Pool
+from multiprocessing import freeze_support
+from functools import partial
+
+def findFile(name, path):
+    for root, dirs, files in os.walk(path):
+        if name in files:
+            return os.path.join(root, name)
 
 def getInputs():
     # get the list of strings, each string being a set of inputs to test
@@ -26,7 +36,7 @@ def getInputs():
 
             # add each new testInput to the list of inputs
             inputList.append(testInput)
-        
+    
     return inputList
 
 def getGradingKey(inputList):
@@ -56,10 +66,32 @@ def getAllStudents():
         student = Student() # create a new student
         student.name = studentFolder    # we are just going to assume that the folders are named after the students
         student.pathToGradeFile = os.path.join(PATH_TO_OUTPUT, student.name + ".txt")
-        student.pathToBinFolder = os.path.join(STUDENT_FOLDER_PARENT, studentFolder, PATH_TO_BIN)
+
+        # We find the first instance of the class file in the student workspace
+        student.pathToBinFolder = os.path.dirname(findFile(CLASS_FILE, os.path.join(STUDENT_FOLDER_PARENT, studentFolder)))
         students.append(student) 
 
     return students
+
+def run_multiprocessing(studentList, inputList, gradingKey):
+    global NUM_PROCESSORS
+    with Pool(processes=NUM_PROCESSORS) as pool:
+        pool.map(partial(gradeIndividualStudent, inputList=inputList, gradingKey=gradingKey) , studentList)
+
+def gradeIndividualStudent(student, inputList, gradingKey):
+    student.createGradeFile()
+    print("grading student : " + student.name)
+
+    for testInput in inputList:
+        # use each input case to load output and error dictionaries
+        student.testStudent(testInput)
+
+        if(student.rawOutputDict[testInput] == gradingKey[testInput]):
+            # if the student got the question right we can increase their score
+            student.score += 1
+    
+    student.grade(gradingKey)
+    student.gradeFile.close()
 
 def gradeAllStudents():
     # grading all students will run through all necesary steps
@@ -68,22 +100,10 @@ def gradeAllStudents():
     gradingKey = getGradingKey(inputList) # collect the list of respective outputs
 
     students = getAllStudents() # create list of student objects with names and pathToClassFile
-
-    for student in students:
-        student.createGradeFile()
-        print("grading student : " + student.name)
-
-        for testInput in inputList:
-            # use each input case to load output and error dictionaries
-            student.testStudent(testInput)
-
-            if(student.rawOutputDict[testInput] == gradingKey[testInput]):
-                # if the student got the question right we can increase their score
-                student.score += 1
-        
-        student.grade(gradingKey)
-        student.gradeFile.close()
+    run_multiprocessing(list(students), inputList, gradingKey)
 
     print("done")
 
-gradeAllStudents()
+if __name__ == "__main__":
+    freeze_support()
+    gradeAllStudents()
