@@ -16,7 +16,6 @@ def findFile(name, path):
 
 def getInputs():
     # get the list of strings, each string being a set of inputs to test
-    global NUMBER_OF_TEST_CASES
     inputList = []
     with open(INPUT_FILE_PATH) as inputFile:
         while True:
@@ -28,7 +27,6 @@ def getInputs():
 
             # we have another test case, so we will loop through the number of inputs
             #   and build the input string
-            NUMBER_OF_TEST_CASES += 1
             numInputs = int(numInputsLine.replace("inputs:",""))
             testInput = ""
             for i in range(numInputs):

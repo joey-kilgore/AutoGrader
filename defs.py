@@ -22,6 +22,3 @@ CLASS_FILE = "ConnectFour.class"
 
 # PATH_TO_OUTPUT is the path for the folder to put all output files
 PATH_TO_OUTPUT = "L:\\Github Repos\\AutoGrader\\output"
-
-# NUMBER_OF_TEST_CASES is AUTOMATICALLY calculated. it should be 0 here
-NUMBER_OF_TEST_CASES = 0

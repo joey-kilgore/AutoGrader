@@ -48,7 +48,7 @@ class Student:
 
     def grade(self, gradingKey):
         self.gradeFile.write(self.name + "\n")
-        self.gradeFile.write("AUTO GRADER SCORE : " + str(self.score) + "/" + str(NUMBER_OF_TEST_CASES) + "\n")
+        self.gradeFile.write("AUTO GRADER SCORE : " + str(self.score) + "/" + str(len(gradingKey.keys())) + "\n")
         self.gradeFile.write("-----------------------------\n")
 
         for testInput in gradingKey.keys():
