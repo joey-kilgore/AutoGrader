@@ -66,8 +66,12 @@ def getAllStudents():
         student.pathToGradeFile = os.path.join(PATH_TO_OUTPUT, student.name + ".txt")
 
         # We find the first instance of the class file in the student workspace
-        student.pathToBinFolder = os.path.dirname(findFile(CLASS_FILE, os.path.join(STUDENT_FOLDER_PARENT, studentFolder)))
-        students.append(student) 
+        try:
+            student.pathToBinFolder = os.path.dirname(findFile(CLASS_FILE, os.path.join(STUDENT_FOLDER_PARENT, studentFolder)))
+            students.append(student) 
+        except:
+            # unable to find the class file for the student
+            print("NO CLASS FILE AVAILABLE " + student.name)
 
     return students
 
