@@ -2,6 +2,7 @@ from defs import *
 import subprocess
 import time
 import os
+import difflib
 
 class Student:
     # Student class contains all relevant information for each respective student
@@ -25,18 +26,21 @@ class Student:
         #   mapping the input to the output and input to error
 
         # popen creates a subprocess that allows us to run the class file and then pass input and read output
-        argsList = ['java', '-classpath', self.pathToBinFolder, 'ConnectFour']
-        p = subprocess.Popen(argsList, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        argsList = ['java', '-classpath', self.pathToBinFolder, CLASS_NAME]
+        p = None        
 
         # test the given input using communicate
         try:
+            p = subprocess.Popen(argsList, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             # communicate lets us give a byte sequence (the encoded input)  and get a byte sequence out
             (out, err) = p.communicate(input.encode('ascii'), timeout=MAX_RUNTIME)
             p.kill()
-        except TimeoutError:
+        except subprocess.TimeoutExpired as e:
             # if a timeout occurs we catch it here
             p.kill()
-            (out, err) = p.communicate()
+            out = b""
+            err = b"TIMEOUT"
+            #(out, err) = p.communicate()
 
         # to save the output we need to do 3 things
         # we need to take the bytes and convert to a string (with decode)
@@ -59,6 +63,13 @@ class Student:
                 self.gradeFile.write("\nCORRECT OUTPUT\n")
             else:
                 self.gradeFile.write("\n***===INCORRECT OUTPUT===***\n")
+                # for i,s in enumerate(difflib.ndiff(self.rawOutputDict[testInput], gradingKey[testInput])):
+                #     if s[0]==' ': continue
+                #     elif s[0]=='-':
+                #         print(u'Delete "{}" from position {}'.format(s[-1],i))
+                #     elif s[0]=='+':
+                #         print(u'Add "{}" to position {}'.format(s[-1],i))    
+                # print()   
 
             self.gradeFile.write("INPUT:\n")
             self.gradeFile.write(testInput + "\n")

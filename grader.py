@@ -78,7 +78,9 @@ def getAllStudents():
 def run_multiprocessing(studentList, inputList, gradingKey):
     global NUM_PROCESSORS
     with Pool(processes=NUM_PROCESSORS) as pool:
-        pool.map(partial(gradeIndividualStudent, inputList=inputList, gradingKey=gradingKey) , studentList)
+       pool.map(partial(gradeIndividualStudent, inputList=inputList, gradingKey=gradingKey) , studentList)
+    #  for student in studentList:
+    #      gradeIndividualStudent(student,inputList,gradingKey)
 
 def gradeIndividualStudent(student, inputList, gradingKey):
     student.createGradeFile()

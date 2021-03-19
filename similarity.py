@@ -96,7 +96,7 @@ def documentSimilarity(filename_1, filename_2):
     sorted_word_list_2 = word_frequencies_for_file(filename_2) 
     distance = vector_angle(sorted_word_list_1, sorted_word_list_2) 
       
-    print("The distance between the documents is: % 0.6f (radians)"% distance) 
+    #print("The distance between the documents is: % 0.6f (radians)"% distance) 
     return distance
 
 def listdirs(path):
@@ -121,19 +121,23 @@ def main():
         similarityMatrix[studentFolder] = {}
     
     for studentFolder in studentFolders:
-        javaFileDict[studentFolder] = findFile("ConnectFour.java", os.path.join(STUDENT_FOLDER_PARENT, studentFolder))
-        
-        for compareStudentFolder in javaFileDict.keys():
-            num = documentSimilarity(javaFileDict[studentFolder], javaFileDict[compareStudentFolder])
-            similarityMatrix[studentFolder][compareStudentFolder] = num
-            similarityMatrix[compareStudentFolder][studentFolder] = num
+        newFile = findFile("ConnectFour.java", os.path.join(STUDENT_FOLDER_PARENT, studentFolder))
+        if newFile != None:
+            javaFileDict[studentFolder] = newFile
+            for compareStudentFolder in javaFileDict.keys():
+                num = documentSimilarity(javaFileDict[studentFolder], javaFileDict[compareStudentFolder])
+                similarityMatrix[studentFolder][compareStudentFolder] = num
+                similarityMatrix[compareStudentFolder][studentFolder] = num
     
-    print(similarityMatrix)
+    #print(similarityMatrix)
     f = open("similarity.csv", "w")
     for studentFolder in studentFolders:
         f.write(studentFolder + ",")
         for compareStudentFolder in studentFolders:
-            f.write(str(similarityMatrix[studentFolder][compareStudentFolder]) + ",")
+            try:
+                f.write(str(similarityMatrix[studentFolder][compareStudentFolder]) + ",")
+            except:
+                print("caught")
         f.write("\n")
 
     f.close()
