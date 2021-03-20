@@ -16,25 +16,25 @@ def findFile(name, path):
 
 def getInputs():
     # get the list of strings, each string being a set of inputs to test
-    inputList = []
-    with open(INPUT_FILE_PATH) as inputFile:
-        while True:
-            # loop until we run out of lines to read
-            # the first line of each set of inputs should be in the form "inputs:#"
-            numInputsLine = inputFile.readline()
-            if not numInputsLine:
-                break # we have run out of inputs 
+    # inputList = []
+    # with open(INPUT_FILE_PATH) as inputFile:
+    #     while True:
+    #         # loop until we run out of lines to read
+    #         # the first line of each set of inputs should be in the form "inputs:#"
+    #         numInputsLine = inputFile.readline()
+    #         if not numInputsLine:
+    #             break # we have run out of inputs 
 
-            # we have another test case, so we will loop through the number of inputs
-            #   and build the input string
-            numInputs = int(numInputsLine.replace("inputs:",""))
-            testInput = ""
-            for i in range(numInputs):
-                testInput += inputFile.readline()
+    #         # we have another test case, so we will loop through the number of inputs
+    #         #   and build the input string
+    #         numInputs = int(numInputsLine.replace("inputs:",""))
+    #         testInput = ""
+    #         for i in range(numInputs):
+    #             testInput += inputFile.readline()
 
-            # add each new testInput to the list of inputs
-            inputList.append(testInput)
-    
+    #         # add each new testInput to the list of inputs
+    #         inputList.append(testInput)
+    inputList = ['test']
     return inputList
 
 def getGradingKey(inputList):
@@ -77,10 +77,10 @@ def getAllStudents():
 
 def run_multiprocessing(studentList, inputList, gradingKey):
     global NUM_PROCESSORS
-    with Pool(processes=NUM_PROCESSORS) as pool:
-       pool.map(partial(gradeIndividualStudent, inputList=inputList, gradingKey=gradingKey) , studentList)
-    #  for student in studentList:
-    #      gradeIndividualStudent(student,inputList,gradingKey)
+    # with Pool(processes=NUM_PROCESSORS) as pool:
+    #    pool.map(partial(gradeIndividualStudent, inputList=inputList, gradingKey=gradingKey) , studentList)
+    for student in studentList:
+        gradeIndividualStudent(student,inputList,gradingKey)
 
 def gradeIndividualStudent(student, inputList, gradingKey):
     student.createGradeFile()
@@ -90,9 +90,16 @@ def gradeIndividualStudent(student, inputList, gradingKey):
         # use each input case to load output and error dictionaries
         student.testStudent(testInput)
 
-        if(student.rawOutputDict[testInput] == gradingKey[testInput]):
-            # if the student got the question right we can increase their score
-            student.score += 1
+        studentLines = student.rawOutputDict[testInput].split("\n")
+        gradingKeyLines = gradingKey[testInput].split("\n")
+
+        for (studentLine, gradingKeyLine) in zip(studentLines,gradingKeyLines):
+            studentParts = studentLine.split("|")
+            gradingKeyParts = gradingKeyLine.split("|")
+
+            for (studentPart, gradingKeyPart) in zip(studentParts, gradingKeyParts):
+                if(studentPart.replace(" ","") == gradingKeyPart.replace(" ","")):
+                    student.score += 1
     
     student.grade(gradingKey)
     student.gradeFile.close()

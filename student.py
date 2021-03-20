@@ -3,6 +3,7 @@ import subprocess
 import time
 import os
 import difflib
+import copyFiles
 
 class Student:
     # Student class contains all relevant information for each respective student
@@ -25,15 +26,18 @@ class Student:
         # create a new dictionary entry for the student object
         #   mapping the input to the output and input to error
 
+        # we need to copy the input files to the bin folder
+        copyFiles.copyAllFiles(self.pathToBinFolder)
+
         # popen creates a subprocess that allows us to run the class file and then pass input and read output
         argsList = ['java', '-classpath', self.pathToBinFolder, CLASS_NAME]
         p = None        
 
         # test the given input using communicate
         try:
-            p = subprocess.Popen(argsList, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            p = subprocess.Popen(argsList, shell=True, cwd=self.pathToBinFolder, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             # communicate lets us give a byte sequence (the encoded input)  and get a byte sequence out
-            (out, err) = p.communicate(input.encode('ascii'), timeout=MAX_RUNTIME)
+            (out, err) = p.communicate(timeout=MAX_RUNTIME)
             p.kill()
         except subprocess.TimeoutExpired as e:
             # if a timeout occurs we catch it here
@@ -52,7 +56,7 @@ class Student:
 
     def grade(self, gradingKey):
         self.gradeFile.write(self.name + "\n")
-        self.gradeFile.write("AUTO GRADER SCORE : " + str(self.score) + "/" + str(len(gradingKey.keys())) + "\n")
+        self.gradeFile.write("AUTO GRADER SCORE : " + str(self.score) + "/" + str() + "\n")
         self.gradeFile.write("-----------------------------\n")
 
         for testInput in gradingKey.keys():
