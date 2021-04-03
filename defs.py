@@ -15,7 +15,7 @@ SOLUTION_BIN_FOLDER = 'L:\\School\\Spring 2021\\Intro to Object Oriented\\Projec
 INPUT_FILE_PATH = "L:\\School\\Spring 2021\\Intro to Object Oriented\\AutoGrader\\Connect Four Autograder\\inputs.txt"
 
 # STUDENT_FOLDER_PARENT is the parent folder of all student projects
-STUDENT_FOLDER_PARENT = "L:\\School\\Spring 2021\\Intro to Object Oriented\\Project 2\\preSubmissions"
+STUDENT_FOLDER_PARENT = "L:\\School\\Spring 2021\\Intro to Object Oriented\\Project 2\\First Round\\fromBB"
 
 # CLASS_FILE is the name of the class file that every student should have in their workspace
 CLASS_NAME = "GeometricFigures"

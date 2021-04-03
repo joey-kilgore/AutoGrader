@@ -100,6 +100,8 @@ def gradeIndividualStudent(student, inputList, gradingKey):
             for (studentPart, gradingKeyPart) in zip(studentParts, gradingKeyParts):
                 if(studentPart.replace(" ","") == gradingKeyPart.replace(" ","")):
                     student.score += 1
+                else:
+                    student.missed.append((studentLine,studentPart,gradingKeyPart))
     
     student.grade(gradingKey)
     student.gradeFile.close()

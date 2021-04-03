@@ -17,6 +17,7 @@ class Student:
         self.score = 0
         self.pathToGradeFile = ""
         self.gradeFile = None
+        self.missed = []
 
     def createGradeFile(self):
         # open/create the student file and store the open file in self.gradeFile
@@ -63,10 +64,10 @@ class Student:
             # for each input, mark whether they got it correct or incorrect
             #   if there was an error we will output that
             #   if they got it incorrect, show all input, output, and solution
-            if(self.rawOutputDict[testInput] == gradingKey[testInput]):
-                self.gradeFile.write("\nCORRECT OUTPUT\n")
-            else:
-                self.gradeFile.write("\n***===INCORRECT OUTPUT===***\n")
+            # if(self.rawOutputDict[testInput] == gradingKey[testInput]):
+            #     self.gradeFile.write("\nCORRECT OUTPUT\n")
+            # else:
+            #     self.gradeFile.write("\n***===INCORRECT OUTPUT===***\n")
                 # for i,s in enumerate(difflib.ndiff(self.rawOutputDict[testInput], gradingKey[testInput])):
                 #     if s[0]==' ': continue
                 #     elif s[0]=='-':
@@ -75,12 +76,18 @@ class Student:
                 #         print(u'Add "{}" to position {}'.format(s[-1],i))    
                 # print()   
 
-            self.gradeFile.write("INPUT:\n")
-            self.gradeFile.write(testInput + "\n")
+            # self.gradeFile.write("INPUT:\n")
+            # self.gradeFile.write(testInput + "\n")
             self.gradeFile.write("\nYOUR OUTPUT\n")
             self.gradeFile.write(self.rawOutputDict[testInput])
             self.gradeFile.write("\nSOLUTION\n")
             self.gradeFile.write(gradingKey[testInput])
             self.gradeFile.write("\nERROR\n")
             self.gradeFile.write(self.rawErrorDict[testInput])
+            self.gradeFile.write("\nMISSED\n")
+            for (studentLine,studentPart,gradingKeyPart) in self.missed:
+                self.gradeFile.write("IN YOUR LINE: " + studentLine + "\n")
+                self.gradeFile.write("YOUR OUTPUT: " + studentPart + "\n")
+                self.gradeFile.write("SHOULD BE: " + gradingKeyPart + "\n\n")
+
             self.gradeFile.write("\n--------------------------\n")
