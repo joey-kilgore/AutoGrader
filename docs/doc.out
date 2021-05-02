@@ -1,0 +1,19 @@
+\BOOKMARK [0][-]{chapter.1}{Setup}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Recommended Software}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Python}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Github Desktop}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{Visual Studio Code}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.5}{LaTeX}{chapter.1}% 6
+\BOOKMARK [0][-]{chapter.2}{Configuring Autograder}{}% 7
+\BOOKMARK [1][-]{section.2.1}{MAX\137RUNTIME}{chapter.2}% 8
+\BOOKMARK [1][-]{section.2.2}{NUM\137PROCESSORS}{chapter.2}% 9
+\BOOKMARK [1][-]{section.2.3}{SOLUTION\137BIN\137FOLDER}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.4}{INPUT\137FILE\137PATH}{chapter.2}% 11
+\BOOKMARK [1][-]{section.2.5}{STUDENT\137FOLDER\137PARENT}{chapter.2}% 12
+\BOOKMARK [1][-]{section.2.6}{CLASS\137NAME and CLASS\137FILE}{chapter.2}% 13
+\BOOKMARK [1][-]{section.2.7}{PATH\137TO\137OUTPUT}{chapter.2}% 14
+\BOOKMARK [0][-]{chapter.3}{Project 1}{}% 15
+\BOOKMARK [1][-]{section.3.1}{Running Projects}{chapter.3}% 16
+\BOOKMARK [0][-]{chapter.4}{Project 2}{}% 17
+\BOOKMARK [1][-]{section.4.1}{Grading Breakdown}{chapter.4}% 18
+\BOOKMARK [0][-]{chapter.5}{similarity.py}{}% 19
